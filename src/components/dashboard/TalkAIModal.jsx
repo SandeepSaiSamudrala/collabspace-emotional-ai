@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Bot, X, Sparkles } from "lucide-react";
 import useMoodStore from "../../store/MoodStore";
 import getTalkAIResponse from "../../services/talkAIService";
-import analyzeSentiment from "../../services/sentimentService";
 
 export default function TalkAIModal({ onClose }) {
   const { currentMood } = useMoodStore();
@@ -20,22 +19,13 @@ export default function TalkAIModal({ onClose }) {
     })
   );
 
-  // Sentiment result state
-  const [sentimentResult, setSentimentResult] = useState(null);
+  
 
   // Handle option click
   const handleOption = async (optionId) => {
     const selectedOption = response.options.find((opt) => opt.id === optionId);
     if (!selectedOption) return;
-
-   const textToAnalyze = "I feel sad and stressed today";
-      console.log("Text sent to sentiment model:", textToAnalyze); // 🔥 LOG IT
-      
-    // Call Firebase function to get sentiment
-    const sentiment = await analyzeSentiment(textToAnalyze);
-    console.log("Raw sentiment from function:", sentiment);
-    setSentimentResult(sentiment);
-
+    
     // Get next AI response
     const next = getTalkAIResponse({
       mood: currentMood?.mood,
@@ -77,14 +67,6 @@ export default function TalkAIModal({ onClose }) {
           <div className="rounded-2xl bg-white/5 border border-white/10 p-4 text-gray-200 text-sm leading-relaxed">
             {response.message}
           </div>
-
-          {/* Sentiment result */}
-          {sentimentResult && (
-            <div className="text-sm text-yellow-300 bg-yellow-500/10 border border-yellow-400/20 rounded-xl px-3 py-2">
-              📝 Sentiment: {sentimentResult.label} (
-              {(sentimentResult.score * 100).toFixed(0)}%)
-            </div>
-          )}
 
           {/* Options */}
           {response.options && (
