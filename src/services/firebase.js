@@ -4,12 +4,12 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBf0K7PErIityvod2VAY5iclmKds0etSMg",
-  authDomain: "collabspace-emotional-ai.firebaseapp.com",
-  projectId: "collabspace-emotional-ai",
-  storageBucket: "collabspace-emotional-ai.firebasestorage.app",
-  messagingSenderId: "519692808842",
-  appId: "1:519692808842:web:36c79a2194bdc2334af373"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
