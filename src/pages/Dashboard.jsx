@@ -5,7 +5,7 @@ import QuickActions from "../components/dashboard/QuickActions";
 import QuickStats from "../components/dashboard/QuickStats";
 import MoodSnapshot from "../components/dashboard/MoodSnapshot";
 import MoodCheckButton from "../components/dashboard/MoodCheckButton";
-import TeamMoodChart from "../components/dashboard/TeamMoodChart";
+import MyMoodChart from "../components/dashboard/MyMoodChart";
 import AIMoodInsightCard from "../components/dashboard/AIMoodInsightCard";
 import TaskBoard from "../components/dashboard/TaskBoard";
 import ChatPreview from "../components/dashboard/ChatPreview";
@@ -92,7 +92,7 @@ useEffect(() => {
           
             <MoodCheckButton />
           </div>
-          <TeamMoodChart />
+          <MyMoodChart />
           <AIMoodInsightCard />
         </motion.div>
 
