@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Search, Send, MoreVertical, Users } from "lucide-react";
 import { auth } from "../services/firebase";
 import { createNotification } from '../services/firestoreServices';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   getUserProfile,
@@ -16,6 +17,8 @@ export default function Chat() {
   const [inputText, setInputText] = useState("");
   const messagesEndRef = useRef(null);
   const unsubscribePrivateRef = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const {
     messages,
@@ -35,6 +38,22 @@ export default function Chat() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const isPrivateChat = chatType === "private";
+
+  // EFFECT: Set user from navigation state
+  useEffect(() => {
+    if (location.state?.selectedMember) {
+      const member = location.state.selectedMember;
+      // Map the incoming member object from TeamMembers to the format Chat.jsx expects
+      setSelectedUser({
+        userId: member.id, // Assuming 'id' from TeamMembers is the userId
+        userName: member.name, // Assuming 'name' from TeamMembers is the userName
+        // ... any other properties from 'member' that might be needed by selectedUser
+      });
+      setChatType("private");
+      // Clear location state to prevent re-triggering on refresh
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location, setSelectedUser, setChatType, navigate]);
 
   // Scroll to bottom
   const scrollToBottom = () => {
