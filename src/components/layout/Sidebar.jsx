@@ -1,5 +1,5 @@
  import { Home, ClipboardList, MessageCircle, Brain, Calendar, Users, Settings, Bell } from "lucide-react";
-import Logo from "../../assets/logo/projectlogo.png";
+import Logo from "../../assets/logo/projectLogo.png";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 
