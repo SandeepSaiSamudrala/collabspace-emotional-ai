@@ -2,33 +2,66 @@
 // src/components/layout/Navbar.jsx
 import { Search, Bell, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState,useEffect} from "react";
 import { auth } from "../../services/firebase";
 import { signOut } from "firebase/auth";
 import TalkAIModal from "../dashboard/TalkAIModal";
 import { subscribeToNotifications } from "../../services/firestoreServices";
 export default function Navbar() {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation(); // Get current location
   const [query, setQuery] = useState("");
   const [openProfile, setOpenProfile] = useState(false);
   const [showAI, setShowAI] = useState(false);
- 
+
   const [notifications, setNotifications] = useState([]);
   const [showNotif, setShowNotif] = useState(false);
-   const latestNotifications = notifications.slice(0, 3);
+  const latestNotifications = notifications.slice(0, 3);
   const hasUnread = notifications.some(n => n.read === false);
 
-        useEffect(() => {
-          const user = auth.currentUser;
-          if (!user) return;
+  // Function to get page title based on pathname
+  const getPageTitle = (pathname) => {
+    switch (pathname) {
+      case "/":
+        return "Dashboard";
+      case "/tasks":
+        return "Tasks";
+      case "/chat":
+        return "Chat";
+      case "/team":
+        return "Team Members";
+      case "/calendar":
+        return "Calendar";
+      case "/settings":
+        return "Settings";
+      case "/ai":
+        return "AI Assistant";
+      case "/notifications":
+        return "Notifications";
+      default:
+        // Fallback for paths not explicitly listed, e.g., /authpages/login
+        const pathSegments = pathname.split('/').filter(Boolean);
+        if (pathSegments.length > 0) {
+          const lastSegment = pathSegments[pathSegments.length - 1];
+          return lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1).replace(/([A-Z])/g, ' $1').trim();
+        }
+        return "Dashboard"; // Default title if no segment found
+    }
+  };
 
-          const unsub = subscribeToNotifications(user.uid, (data) => {
-            setNotifications(data);
-          });
+  const currentPageTitle = getPageTitle(location.pathname);
 
-          return () => unsub();
-        }, []);
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const unsub = subscribeToNotifications(user.uid, (data) => {
+      setNotifications(data);
+    });
+
+    return () => unsub();
+  }, [auth.currentUser?.uid]); // Add auth.currentUser?.uid to dependency array
 
   const handleSearch = (e) => {
     if (e.key !== "Enter") return;
@@ -38,20 +71,17 @@ export default function Navbar() {
     if (q.includes("task")) navigate("/tasks");
     else if (q.includes("chat")) navigate("/chat");
     else if (q.includes("team")) navigate("/team");
-    else if (q.includes("calender")) navigate("/calender");
+    else if (q.includes("calendar")) navigate("/calendar");
     else if (q.includes("settings")) navigate("/settings");
     else if (q.includes("ai")) navigate("/ai");
     else if (q.includes("notifications")) navigate("/notifications");
   };
   return (
-    <div className="w-full  bg-gradient-to-l from-[#1A2338] to-[#111A2C]
-]
-
-  shadow-sm flex items-center justify-between px-6 border-b border-white/10">
+    <div className="w-full  bg-gradient-to-l from-[#1A2338] to-[#111A2C] shadow-sm flex items-center justify-between px-6 border-b border-white/10">
 
       {/* Page Title */}
       <h2 className="text-xl font-semibold text-gray-300">
-        Dashboard
+        {currentPageTitle}
       </h2>
 
       {/* Right Actions */}
@@ -135,7 +165,6 @@ export default function Navbar() {
         {/* AI Button */}
              <button
                  onClick={() => {
-                          console.log("AI BUTTON CLICKED");
                           setShowAI(true)
                         }}
                 
