@@ -85,9 +85,9 @@ useEffect(() => {
         {/* 4 */}
         <motion.div
           variants={sectionVariant}
-          className="mt-4 grid grid-cols-3 justify-evenly p-3 gap-6 rounded-xl border-white/10"
+          className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly p-3 gap-6 rounded-xl border border-white/10"
         >
-          <div>
+          <div className="flex flex-col gap-4">
            <MoodSnapshot />
           
             <MoodCheckButton />
@@ -104,7 +104,7 @@ useEffect(() => {
         {/* 6 */}
         <motion.div
           variants={sectionVariant}
-          className="mt-2 grid grid-cols-2 p-3 rounded-xl gap-6 border-white/10"
+          className="mt-6 grid grid-cols-1 md:grid-cols-2 p-3 rounded-xl gap-6 border border-white/10"
         >
           <ChatPreview />
           <RecentActivity />
