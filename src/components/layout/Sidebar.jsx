@@ -1,4 +1,4 @@
- import { Home, ClipboardList, MessageCircle, Brain, Calendar, Users, Settings, Bell } from "lucide-react";
+import { Home, ClipboardList, MessageCircle, Brain, Calendar, Users, Settings, Bell } from "lucide-react";
 import Logo from "../../assets/logo/projectLogo.png";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
@@ -101,7 +101,7 @@ export default function Sidebar() {
           }
         >
           <Calendar size={20} />
-          <span>Calender</span>
+          <span>Calendar</span>
         </NavLink>
 
         {/* Notifications */}
