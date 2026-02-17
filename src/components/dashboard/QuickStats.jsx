@@ -14,9 +14,9 @@ export default function QuickStats() {
   const [notifications, setNotifications] = useState([]);
   const { getMoodScore } = useMoodStore();
 
-  /* -----------------------------
+  /* 
      Load Tasks (REAL-TIME)
-  ------------------------------*/
+*/
   useEffect(() => {
     const unsubscribe = subscribeToTasks((taskList) => {
       setTasks(taskList || []);
@@ -38,8 +38,8 @@ export default function QuickStats() {
       }
     );
 
-    return () => unsubscribe && unsubscribe();
-  }, []);
+    return () => unsubscribe?.();
+  }, [auth.currentUser?.uid]);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
   const notificationValue =
@@ -106,7 +106,7 @@ export default function QuickStats() {
   ];
 
   return (
-    <div className="grid grid-cols-4 gap-4 mt-6 mb-0">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6 mb-0">
       {stats.map((item) => (
         <div
           key={item.id}
