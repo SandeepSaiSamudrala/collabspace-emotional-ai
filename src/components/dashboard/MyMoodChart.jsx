@@ -105,7 +105,7 @@ export default function MyMoodChart() {
         {/* SVG Circle Chart */}
         <svg width="160" height="160" className="rotate-[-90deg]">
           {segments.map((seg, index) => {
-            const segmentLength = (seg.value / total) * circumference;
+            const segmentLength = total === 0 ? 0 : (seg.value / total) * circumference;
             const strokeDasharray = `${segmentLength} ${circumference}`;
             const strokeDashoffset = offset;
             offset -= segmentLength;
