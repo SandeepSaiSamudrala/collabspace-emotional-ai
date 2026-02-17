@@ -3,16 +3,17 @@ import Logo from "../../assets/logo/projectLogo.png";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 
-export default function Sidebar() {
+export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
   return (
-    <div className="h-screen w-60 bg-gradient-to-t from-[#1A2338] to-[#111A2C]
- text-[#C7D1E0] p-2 flex flex-col border-r border-white/10">
+    <div className={`h-screen w-60 bg-gradient-to-t from-[#1A2338] to-[#111A2C]
+      text-[#C7D1E0] p-2 flex flex-col border-r border-white/10
+      lg:block ${isSidebarOpen ? 'fixed inset-y-0 left-0 z-50 transform translate-x-0 transition-transform ease-in-out duration-300' : 'fixed inset-y-0 left-0 z-50 transform -translate-x-full transition-transform ease-in-out duration-300 lg:translate-x-0'}`}>
 
       
       <div className="mb-10 flex items-center -ml-3 ">
 
         <motion.img
-  src="/src/assets/logo/projectLogo.png"
+  src={Logo}
   alt="CollabSpace"
   animate={{ rotate: [0, 360] }}
   transition={{

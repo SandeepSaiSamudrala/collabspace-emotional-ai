@@ -1,6 +1,6 @@
 
 // src/components/layout/Navbar.jsx
-import { Search, Bell, Sparkles } from "lucide-react";
+import { Search, Bell, Sparkles, Menu } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState,useEffect} from "react";
@@ -8,7 +8,7 @@ import { auth } from "../../services/firebase";
 import { signOut } from "firebase/auth";
 import TalkAIModal from "../dashboard/TalkAIModal";
 import { subscribeToNotifications } from "../../services/firestoreServices";
-export default function Navbar() {
+export default function Navbar({ toggleSidebar }) {
   const navigate = useNavigate();
   const location = useLocation(); // Get current location
   const [query, setQuery] = useState("");
@@ -78,11 +78,19 @@ export default function Navbar() {
   };
   return (
     <div className="w-full  bg-gradient-to-l from-[#1A2338] to-[#111A2C] shadow-sm flex items-center justify-between px-6 border-b border-white/10">
-
-      {/* Page Title */}
-      <h2 className="text-xl font-semibold text-gray-300">
-        {currentPageTitle}
-      </h2>
+      <div className="flex items-center gap-4">
+        {/* Hamburger Menu Button for Mobile */}
+        <motion.button 
+          onClick={toggleSidebar}
+          className="lg:hidden p-2 rounded-md transition hover:bg-white/10"
+        >
+          <Menu size={22} className="text-gray-300 hover:text-white" />
+        </motion.button>
+        {/* Page Title */}
+        <h2 className="text-xl font-semibold text-gray-300">
+          {currentPageTitle}
+        </h2>
+      </div>
 
       {/* Right Actions */}
       <div className="flex items-center gap-8">
@@ -206,3 +214,4 @@ export default function Navbar() {
     </div>
   );
 }
+
